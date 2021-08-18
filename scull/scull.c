@@ -13,6 +13,55 @@ static struct cdev *mycdev = NULL;
 module_param(scull_major, int, S_IRUSR | S_IWUSR);
 MODULE_PARM_DESC(scull_major, "major number of the device");
 
+static loff_t scull_llseek(struct file *filp, loff_t loff, int pos)
+{
+	printk("%s\n", __func__);
+	return 0;
+}
+
+static ssize_t scull_read(struct file *filp, char __user *mem, size_t sz, loff_t *loff)
+{
+	printk("%s\n", __func__);
+	return 0; 
+}
+
+static ssize_t scull_write(struct file *filp, const char __user *mem, size_t sz, loff_t *loff)
+{
+	printk("%s\n", __func__);
+	return 0; 
+}
+
+//int scull_ioctl(struct inode *, struct file *filp, unsigned int, unsigned long);
+static long scull_unlocked_ioctl(struct file *filp, unsigned int x, unsigned long y)
+{
+	printk("%s\n", __func__);
+	return 0; 
+}
+
+static int scull_open(struct inode *inode, struct file *filp)
+{
+	printk("%s\n", __func__);
+	return 0; 
+}
+
+static int scull_release(struct inode *inode, struct file *filp)
+{
+	printk("%s\n", __func__);
+	return 0; 
+}
+
+struct file_operations scull_fops = 
+{
+	.owner	= THIS_MODULE,
+	.llseek	= scull_llseek,
+	.read	= scull_read,
+	.write	= scull_write,
+	.unlocked_ioctl	= scull_unlocked_ioctl,
+	.open	= scull_open,
+	.release= scull_release,
+};
+
+
 static int __init scull_init(void)
 {
 	int retval;
